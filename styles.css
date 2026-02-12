@@ -1,0 +1,142 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: black;
+    color: #4AF626;
+}
+
+/* ===== HEADER ===== */
+
+.top-bar {
+    margin: 10px;
+}
+
+.system-line,
+.stats-line {
+    border: 2px solid #4AF626;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+/* ===== LAYOUT ===== */
+
+main {
+    display: flex;
+    margin: 10px;
+    gap: 20px;
+}
+
+.panel {
+    border: 2px solid #4AF626;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-title {
+    padding: 10px;
+    border-bottom: 2px solid #4AF626;
+    text-align: center;
+    font-weight: bold;
+}
+
+.panel-content {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.dim {
+    opacity: 0.5;
+    margin-top: 10px;
+}
+
+/* ===== LEFT SIDE ===== */
+
+.personel-list {
+    width: 40%;
+}
+
+.personel-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.personel-list th,
+.personel-list td {
+    border-bottom: 1px solid #4AF626;
+    padding: 8px;
+    text-align: left;
+}
+
+.personel-list tr:hover {
+    background: rgba(74, 246, 38, 0.08);
+    cursor: pointer;
+}
+
+table thead {
+    background: rgba(74, 246, 38, 0.05);
+}
+
+
+/* ===== RIGHT SIDE ===== */
+
+.right-side {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.display-section {
+    height: 300px;
+}
+
+.menu-section {
+    height: 200px;
+}
+
+/* ===== MENU ===== */
+
+.menu-buttons {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.menu-btn {
+    border: 1px solid #4AF626;
+    padding: 8px 14px;
+    cursor: pointer;
+}
+
+.menu-btn:hover {
+    background: #4AF626;
+    color: black;
+}
+
+.menu-btn:active {
+    transform: scale(0.95);
+}
+
+
+/* ===== STATUS COLORS ===== */
+
+.warning {
+    color: yellow;
+}
+
+.status.deployed {
+    color: yellow;
+}
+
+.status.injured {
+    color: red;
+}
+

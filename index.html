@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PMC_MANAGEMENT_SYSTEM v1.0.1</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js" defer></script>
+</head>
+<body>
+
+<header class="top-bar">
+    <div class="system-line">
+        <span>PMC_MANAGEMENT_SYSTEM v1.0.1</span>
+        <span id="date-time"></span>
+    </div>
+    <div class="stats-line">
+        <span>PMC NAME: <span id="pmc-name">ORION GROUP</span></span>
+        <span>FUNDS: <span id="funds">$2 847 550</span></span>
+        <span>REPUTATION: <span id="reputation">73%</span></span>
+        <span>THREAT LEVEL: <span id="threat-level" class="warning">ELEVATED</span></span>
+    </div>
+</header>
+
+<main>
+
+<section class="personel-list panel">
+    <div class="panel-title">=== PERSONEL_ROSTER ===</div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Morale</th>
+                <th>Health</th>
+            </tr>
+        </thead>
+        <tbody id="roster-body">
+            <!-- <tr>
+                <td>001</td>
+                <td>KOVAC</td>
+                <td>ASSAULT</td>
+                <td class="status deployed">DEPLOYED</td>
+                <td>67%</td>
+                <td>100%</td>
+            </tr> -->
+        </tbody>
+    </table>
+</section>
+
+<div class="right-side">
+
+<section class="display-section panel">
+    <div class="panel-title">=== INFORMATION_DISPLAY ===</div>
+    <div class="panel-content">
+        <p>NO ACTIVE SELECTION</p>
+        <p class="dim">SELECT PERSONNEL OR CONTRACT</p>
+    </div>
+</section>
+
+<section class="menu-section panel">
+    <div class="panel-title">=== MENU ===</div>
+    <div class="menu-buttons">
+        <div class="menu-btn" id="hire-btn">[ RECRUIT ]</div>
+        <div class="menu-btn" id="mission-btn">[ MISSIONS ]</div>
+        <!-- <div class="menu-btn">[ BLACK_MARKET ]</div> -->
+        <!-- <div class="menu-btn">[ REPORTS ]</div> -->
+        <!-- <div class="menu-btn">[ FINANCES ]</div> -->
+    </div>
+</section>
+
+</div>
+</main>
+
+</body>
+</html>
