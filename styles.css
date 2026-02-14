@@ -101,6 +101,61 @@ table thead {
     height: 200px;
 }
 
+.mission-card {
+    border: 1px solid #4AF626;
+    border-top-width: 2px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.mission-card:hover {
+    background: #4AF626;
+    color: black;
+}
+
+#personnel-select {
+    border: 1px solid #4AF626;
+    color: #4AF626;
+    background-color: black;
+    padding: 10px;
+    margin: 10px 10px 10px 0px;
+    min-width: 150px;
+}
+/* Start button */
+#start-btn {
+    border: 1px solid #4AF626;
+    padding: 8px 14px;
+    cursor: pointer;
+    background-color: black;
+    color: #4AF626;
+}
+
+#start-btn:hover {
+    background: #4AF626;
+    color: black;
+}
+
+#start-btn:active {
+    transform: scale(0.95);
+}
+/* Cancel button */
+#cancel-btn {
+    border: 1px solid #4AF626;
+    padding: 8px 14px;
+    cursor: pointer;
+    background-color: black;
+    color: #4AF626;
+}
+
+#cancel-btn:hover {
+    background: #4AF626;
+    color: black;
+}
+
+#cancel-btn:active {
+    transform: scale(0.95);
+}
+
 /* ===== MENU ===== */
 
 .menu-buttons {
