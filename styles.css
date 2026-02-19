@@ -16,7 +16,46 @@ body {
     margin: 10px;
 }
 
-.system-line,
+#date-time {
+    font-size: 20px;
+    color: #4AF626;
+    padding: 6px 12px;
+}
+
+.system-line {
+    border: 2px solid #4AF626;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: right;
+    margin-bottom: 8px;
+}
+
+.speed-buttons {
+    display: flex;
+    gap: 10px;
+    margin-right: 20px;
+}
+
+.speed-buttons button {
+    border: 1px solid #4AF626;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: black;
+    color: #4AF626;
+}
+
+.speed-buttons button:hover {
+    background: #4AF626;
+    color: black;
+}
+
+.system-line #pms-version {
+    position: absolute;
+    left: 20px;
+    padding: 6px 12px;
+    font-size: 20px;
+}
+
 .stats-line {
     border: 2px solid #4AF626;
     padding: 12px 20px;
@@ -83,22 +122,36 @@ table thead {
     background: rgba(74, 246, 38, 0.05);
 }
 
+.roster-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    max-height: 470px;
+    scrollbar-color: #4AF626 transparent;
+    scrollbar-width: thin;
+}
+
+.selected-row {
+    background: rgba(74, 246, 38, 0.2);
+}
 
 /* ===== RIGHT SIDE ===== */
 
 .right-side {
     width: 60%;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
 .display-section {
-    height: 300px;
+    min-height: 300px;
+    height: auto;
 }
 
 .menu-section {
-    height: 200px;
+    min-height: 200px;
+    height: auto;
 }
 
 .mission-card {

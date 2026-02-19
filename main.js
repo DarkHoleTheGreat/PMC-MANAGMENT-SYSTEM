@@ -23,6 +23,7 @@ function updateDateTime() {
         second: "2-digit"
     };
 
+
     datetime.textContent = now.toLocaleString("en-UK", options);
 }
 
@@ -39,6 +40,8 @@ const gameState = {
     nextPersonnelID: 1,
     personnel: [],
     availableMissions: [],
+    assignedPersonnel: [],
+    chossingPersonnel: false,
     currentMission: null
 };
 
@@ -109,8 +112,9 @@ const possibleMissionRewards = [5000, 10000, 15000, 20000];
 function generateMission() {
     const type = possibleMissionTypes[Math.floor(Math.random() * possibleMissionTypes.length)];
     const reward = possibleMissionRewards[Math.floor(Math.random() * possibleMissionRewards.length)];
+    let missionRequiredPersonnel = Math.floor(Math.random() * 12) + 1; // 1 to 3 personnel required
 
-    return { type, reward };
+    return { type, reward, missionRequiredPersonnel };
 }
 
 function openMissionBoard() {
@@ -130,6 +134,7 @@ function renderMissionList() {
             <div class="mission-card" data-index="${index}">
                 <p>MISSION: ${m.type}</p>
                 <p>REWARD: $${m.reward}</p>
+                <p>REQUIRED PERSONNEL: ${m.missionRequiredPersonnel}</p>
             </div>
         `).join("")
     
@@ -143,7 +148,17 @@ function selectMission(e) {
     const index = e.currentTarget.dataset.index;
     gameState.selectedMission = gameState.availableMissions[index];
 
-    renderMissionAssignment();
+    if (gameState.personnel.length === 0) {
+        const display = getDisplay();
+        display.innerHTML = `
+            <p>NO AVAILABLE PERSONNEL</p>
+            <p>HIRE SOMEONE BEFORE TAKING ON THIS MISSIONS</p>
+        `;
+    }
+    else {
+        gameState.chossingPersonnel = true;
+        renderMissionAssignment();
+    }
     console.log(gameState.availableMissions[index])
 }
 
@@ -153,6 +168,7 @@ function renderMissionAssignment() {
     display.innerHTML = `
         <p>MISSION: ${gameState.selectedMission.type}</p>
         <p>REWARD: $${gameState.selectedMission.reward}</p>
+        <p>REQUIRED PERSONNEL: ${gameState.assignedPersonnel.length}/${gameState.selectedMission.missionRequiredPersonnel} (CHOSE PERSONNEL BY CLIKING ON OPERATOR IN THE LIST)</p>
 
         <select id="personnel-select">
             ${gameState.personnel.map(p =>
@@ -163,6 +179,27 @@ function renderMissionAssignment() {
         <button id="start-btn">[ START ]</button>
         <button id="cancel-btn">[ CANCEL ]</button>
     `;
+
+    // if (gameState.chossingPersonnel) {
+    // document.getElementById("roster-body").querySelectorAll("tr")
+    //     .forEach(row => {
+    //         row.addEventListener("click", () => {
+    //             row.classList.toggle("selected-row");
+    //             const id = parseInt(row.children[0].textContent);
+
+    //             if (gameState.assignedPersonnel.includes(id)) {
+    //                 gameState.assignedPersonnel = gameState.assignedPersonnel.filter(pid => pid !== id);
+    //             } else {
+    //                 if (gameState.assignedPersonnel.length < gameState.selectedMission.missionRequiredPersonnel) {
+    //                     gameState.assignedPersonnel.push(id);
+    //                 } else {
+    //                     alert("You have already assigned the required number of personnel for this mission.");
+    //                 }
+    //             }
+
+    //         });
+    //     });
+    // }
 
     document.getElementById("start-btn")
         .addEventListener("click", () => {
@@ -179,42 +216,6 @@ function renderMissionAssignment() {
     
     
 }
-
-
-
-// function createMission() {
-//     const mission = generateMission();
-//     gameState.currentMission = mission;
-//     showMissionDetails(mission);
-// }
-
-// function showMissionDetails(mission) {
-//     const displayContent = document.querySelector(".display-section .panel-content");
-
-//     displayContent.innerHTML = `
-//         <p>MISSION TYPE: ${mission.type}</p>
-//         <p>REWARD: $${mission.reward}</p>
-//         <select id="personnel-select">
-//             <option value="">Select Personnel</option>
-//             ${gameState.personnel.map(p =>
-//                 `<option value="${p.id}">${p.name} (${p.role})</option>`
-//             ).join("")}
-//         </select>
-//         <button id="accept-btn">ACCEPT MISSION</button>
-//     `;
-
-//     document.getElementById("accept-btn")
-//         .addEventListener("click", acceptMission);
-// }
-
-// function acceptMission() {
-//     const select = document.getElementById("personnel-select");
-//     const selectedId = parseInt(select.value);
-
-//     if (isNaN(selectedId)) return;
-
-//     simulateMission(selectedId);
-// }
 
 function simulateMission(personId) {
     const displayContent = getDisplay();

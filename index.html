@@ -10,7 +10,13 @@
 
 <header class="top-bar">
     <div class="system-line">
-        <span>PMC_MANAGEMENT_SYSTEM v1.0.1</span>
+        <span id="pms-version">PMC_MANAGEMENT_SYSTEM v1.0.2</span>
+        <div class="speed-buttons">
+        <button>(⏸)</button>
+        <button>></button>
+        <button>>></button>
+        <button>>>></button>
+        </div>
         <span id="date-time"></span>
     </div>
     <div class="stats-line">
@@ -25,6 +31,7 @@
 
 <section class="personel-list panel">
     <div class="panel-title">=== PERSONEL_ROSTER ===</div>
+    <div class="roster-container">
     <table>
         <thead>
             <tr>
@@ -37,16 +44,9 @@
             </tr>
         </thead>
         <tbody id="roster-body">
-            <!-- <tr>
-                <td>001</td>
-                <td>KOVAC</td>
-                <td>ASSAULT</td>
-                <td class="status deployed">DEPLOYED</td>
-                <td>67%</td>
-                <td>100%</td>
-            </tr> -->
         </tbody>
     </table>
+    </div>
 </section>
 
 <div class="right-side">
