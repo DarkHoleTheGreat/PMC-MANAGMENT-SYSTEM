@@ -162,6 +162,14 @@ function selectMission(e) {
     console.log(gameState.availableMissions[index])
 }
 
+function assignPersonnelToMission(personId) {
+    if (gameState.assignedPersonnel.length < gameState.selectedMission.missionRequiredPersonnel) {
+        gameState.assignedPersonnel.push(personId);
+    } else {
+        alert("You have already assigned the required number of personnel for this mission.");
+    }
+}
+
 function renderMissionAssignment() {
     const display = getDisplay();
 
@@ -169,81 +177,68 @@ function renderMissionAssignment() {
         <p>MISSION: ${gameState.selectedMission.type}</p>
         <p>REWARD: $${gameState.selectedMission.reward}</p>
         <p>REQUIRED PERSONNEL: ${gameState.assignedPersonnel.length}/${gameState.selectedMission.missionRequiredPersonnel} (CHOSE PERSONNEL BY CLIKING ON OPERATOR IN THE LIST)</p>
-
-        <select id="personnel-select">
-            ${gameState.personnel.map(p =>
-                `<option value="${p.id}">${p.name} (${p.role})</option>`
-            ).join("")}
-        </select>
         <br>
         <button id="start-btn">[ START ]</button>
         <button id="cancel-btn">[ CANCEL ]</button>
     `;
 
-    // if (gameState.chossingPersonnel) {
-    // document.getElementById("roster-body").querySelectorAll("tr")
-    //     .forEach(row => {
-    //         row.addEventListener("click", () => {
-    //             row.classList.toggle("selected-row");
-    //             const id = parseInt(row.children[0].textContent);
+    document.querySelectorAll("#roster-body tr").forEach(row => {
+        row.addEventListener("click", () => {
 
-    //             if (gameState.assignedPersonnel.includes(id)) {
-    //                 gameState.assignedPersonnel = gameState.assignedPersonnel.filter(pid => pid !== id);
-    //             } else {
-    //                 if (gameState.assignedPersonnel.length < gameState.selectedMission.missionRequiredPersonnel) {
-    //                     gameState.assignedPersonnel.push(id);
-    //                 } else {
-    //                     alert("You have already assigned the required number of personnel for this mission.");
-    //                 }
-    //             }
+            const id = parseInt(row.children[0].textContent);
+            const person = gameState.personnel.find(p => p.id === id);
 
-    //         });
-    //     });
-    // }
+            if (person.status !== "AVAILABLE") return;
+
+            if (gameState.assignedPersonnel.includes(id)) {
+                gameState.assignedPersonnel = gameState.assignedPersonnel.filter(pid => pid !== id);
+                row.classList.remove("selected-row");
+            } else {
+                if (gameState.assignedPersonnel.length < gameState.selectedMission.missionRequiredPersonnel) {
+                    gameState.assignedPersonnel.push(id);
+                    row.classList.add("selected-row");
+                }
+            }
+
+            renderMissionAssignment();
+        });
+    });
 
     document.getElementById("start-btn")
-        .addEventListener("click", () => {
-            const select = document.getElementById("personnel-select");
-            const personID = parseInt(select.value);
-
-            if (isNaN(personID)) return;
-
-            simulateMission(personID);
-        });
+        .addEventListener("click", startMission);
 
     document.getElementById("cancel-btn")
-        .addEventListener("click", renderMissionList);
+        .addEventListener("click", () => {
+            gameState.assignedPersonnel = [];
+            renderMissionList();
+        });
     
     
 }
 
-function simulateMission(personId) {
-    const displayContent = getDisplay();
-    const success = Math.random() < 0.7;
+function startMission() {
 
-    if (!gameState.selectedMission) return;
+    const required = gameState.selectedMission.missionRequiredPersonnel;
+    const assigned = gameState.assignedPersonnel.length;
+
+    const successChance = assigned / required;
+    const success = Math.random() < successChance;
 
     if (success) {
         gameState.funds += gameState.selectedMission.reward;
-
-        displayContent.innerHTML = `
-            <p>MISSION RESULT: SUCCESS</p>
-            <p>REWARD RECEIVED: $${gameState.selectedMission.reward}</p>
-        `;
     } else {
-        // Remove dead personnel
-        gameState.personnel = gameState.personnel.filter(p => p.id !== personId);
-
-        displayContent.innerHTML = `
-            <p>MISSION RESULT: FAILED</p>
-            <p>OPERATIVE LOST</p>
-        `;
+        gameState.personnel =
+            gameState.personnel.filter(p =>
+                !gameState.assignedPersonnel.includes(p.id)
+            );
     }
 
+    gameState.assignedPersonnel = [];
     gameState.selectedMission = null;
 
     renderRoster();
     updateFundsDisplay();
+    renderMissionList();
 }
 
 
