@@ -130,6 +130,10 @@ table thead {
     scrollbar-width: thin;
 }
 
+.standart-row {
+    background-color: black;
+}
+
 .selected-row {
     background: rgba(74, 246, 38, 0.2);
 }

@@ -33,6 +33,8 @@ const gameState = {
     //personnel
     nextPersonnelId: 1,
     personnel: [],
+    asignedPersonnel: [],
+    isSelectingPersonnel: false,
     //Missions
     availableMissions: [],
     selectedMission: null
@@ -80,6 +82,8 @@ function renderRoaster() {
 
     gameState.personnel.forEach(p => {
         const row = document.createElement("tr");
+        row.className = "standart-row";
+        row.dataset.index = p.id;
 
         row.innerHTML = `
             <td>${p.id}</td>
@@ -92,6 +96,17 @@ function renderRoaster() {
 
      roaster.appendChild(row);
     })
+}
+
+function assignPersonnel(p) {
+    if (gameState.isSelectingPersonnel) {
+    const index = p.currentTarget.dataset.index;
+
+    gameState.asignedPersonnel.push(index);
+    index.className = "selected-row";
+    console.log(gameState.asignedPersonnel);
+    }
+    return;
 }
 
 document.getElementById("hire-btn").addEventListener("click", hirePersonnel);
@@ -148,6 +163,8 @@ function selectMission(e) {
     } else {
         renderMissionAssigment();
     }
+
+    gameState.isSelectingPersonnel = true;
 }
 
 function renderMissionAssigment() {
@@ -173,10 +190,16 @@ function renderMissionAssigment() {
 
         if (isNaN(personId)) return;
 
+
         simulateMission(personId);
+        gameState.isSelectingPersonnel = false;
+        gameState.asignedPersonnel = [];
     });
 
-    document.getElementById("cancel-btn").addEventListener("click", renderMissionList);
+    document.getElementById("cancel-btn").addEventListener("click", () => {
+        gameState.isSelectingPersonnel = false;
+        gameState.asignedPersonnel = [];
+        renderMissionList()});
 }
 
 function simulateMission(personId) {
@@ -204,7 +227,6 @@ function simulateMission(personId) {
     updateFunds();
     renderRoaster();
 }
-
 
 
 document.getElementById("mission-btn").addEventListener("click", openMissionBoard);
